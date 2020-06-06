@@ -1,0 +1,316 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+h1 {
+    font-family: 'Allura', cursive;
+    font-size: 5rem;
+}
+
+h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2rem;
+}
+
+h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.3rem;
+    font-weight: bolder;
+}
+
+p {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.1rem;
+}
+
+div {
+    display: block;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    min-height: 8vh;
+    background-color: #27496d;
+    font-family: 'EB Garamond', serif;
+}
+
+/*************************** Navigation Bar ***************************/
+.nav-links {
+    display: flex;
+    justify-content: space-around;
+    width: 40%;
+    z-index: 1;
+}
+.nav-links li {
+    list-style: none;
+}
+.nav-links a {
+    color: #dae1e7;
+    text-decoration: none;
+    letter-spacing: 2px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/*************************** Home Section ***************************/
+#home-section {
+    background-color: #00909e;
+    height: 500px;
+    min-height: 90vh;
+}
+
+.intro-container {
+    position: relative;
+    text-align: center;
+    top: 40%;
+    color: #dae1e7;
+}
+
+/*************************** Personal Projects Section ***************************/
+#personal-projects-section {
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 2rem;
+    margin: 2rem 0rem;
+}
+
+.personal-projects-section-title-container {
+    position: relative;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.personal-project-container {
+    background-color: white;
+    display: flex;
+    justify-content: center;
+}
+
+.image-column {
+    display: flex;
+    align-items: center;
+}
+.image-column img {
+    height: 500px;
+    width: 500px;
+}
+
+.details-column {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.personal-project-title-container-row {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.personal-app-icon img {
+    height: 60px;
+    width: 60px;
+    border-radius: 1rem;
+    margin: 2rem 1rem 0 0;
+}
+.personal-app-title {
+    margin-top: 2rem;
+}
+
+.personal-app-description {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+.personal-app-description p {
+    max-width: 50ch;
+}
+.personal-app-description h3 {
+    margin-bottom: 5px;
+}
+
+.personal-app-technologies p {
+    max-width: 50ch;
+}
+.personal-app-technologies h3 {
+    margin-bottom: 5px;
+}
+
+@media screen and (max-width: 800px) {
+    .personal-project-container {
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .left-img-right-details-container {
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .nav-links {
+        width: 80%;
+    }
+}
+
+/*************************** Treehouse Projects Section ***************************/
+#treehouse-projects-section {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 2rem;
+    margin: 2rem 0rem;
+}
+
+.treehouse-projects-section-title-container {
+    position: relative;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.left-img-right-details-container {
+    display: flex;
+    justify-content: center;
+}
+.tr-details-column {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.tr-app-title {
+    margin-top: 3rem;
+}
+.tr-app-description {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+.tr-app-description p {
+    max-width: 50ch;
+}
+.tr-app-description h3 {
+    margin-bottom: 5px;
+}
+
+.tr-app-technologies p {
+    max-width: 50ch;
+}
+.tr-app-technologies h3 {
+    margin-bottom: 5px;
+}
+
+.github-button {
+    display: block;
+    margin-top: 1rem;
+    text-align: center;
+    min-width: 100px;
+    width: 10%;
+    height: 40px;
+
+    background-color: transparent;
+    border-radius: 8px;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
+    cursor: pointer;
+    color: black;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 10px;
+    font-weight: normal;
+    padding: 13px;
+    text-decoration: none;
+}
+.github-button:hover {
+    background-color: black;
+    color: white;
+}
+
+/*************************** Contact Section ***************************/
+#contact-section {
+    background-color: gray;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+.contact-title-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+    color: black;
+}
+.contact-info {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    margin-bottom: 2rem;
+}
+
+.myButton {
+    display: block;
+    margin: 0 auto 0 auto;
+    text-align: center;
+    min-width: 100px;
+    width: 10%;
+    height: 40px;
+
+    background-color: transparent;
+    border-radius: 8px;
+    border-style: solid;
+    border-color: #5fcf80;
+    border-width: 1px;
+    cursor: pointer;
+    color: white;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 10px;
+    font-weight: normal;
+    padding: 13px;
+    text-decoration: none;
+}
+.myButton:hover {
+	background-color: #5fcf80;
+}
+.credits {
+    display: flex;
+    justify-content: center;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+.copyright {
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: flex-end;
+    min-height: 100px;
+}
+.copyright p {
+    padding: 2rem;
+}
+.social-container {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    padding: 1rem 2rem;
+    background-color: white;
+}
+.social-container img {
+    height: 16px;
+    width: 16px;
+}
+.social-container a {
+    text-decoration: none;
+    color: black;
+}
+.social-container h3 {
+    text-decoration: underline;
+}
