@@ -1,0 +1,30 @@
+---
+import ProjectCard from './ProjectCard.astro';
+import { projects } from '../data/site';
+---
+
+<section class="section" id="work">
+  <div class="shell">
+    <div class="section-head">
+      <p class="eyebrow">02 — Work</p>
+      <h2>Things I've built</h2>
+      <span class="rule"></span>
+    </div>
+
+    <p class="work__intro">
+      Two projects I keep coming back to — one I use every week, one I made because it was fun.
+    </p>
+
+    <div class="work__list">
+      {projects.map((project, index) => <ProjectCard project={project} index={index} />)}
+    </div>
+  </div>
+</section>
+
+<style>
+  .work__intro {
+    max-width: var(--measure);
+    margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+    color: var(--ink-muted);
+  }
+</style>

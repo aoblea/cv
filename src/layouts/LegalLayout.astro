@@ -1,0 +1,134 @@
+---
+import Footer from '../components/Footer.astro';
+import Nav from '../components/Nav.astro';
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  frontmatter: {
+    title: string;
+    app: string;
+    updated: string;
+    description: string;
+    /* The other legal page for this app — the two always link to each other. */
+    related: { href: string; label: string };
+  };
+}
+
+const { title, app, updated, description, related } = Astro.props.frontmatter;
+---
+
+<BaseLayout title={`${title} — ${app}`} description={description}>
+  <Nav />
+
+  <main id="main" class="legal">
+    <div class="shell legal__inner">
+      <header class="legal__head">
+        <p class="eyebrow">{app}</p>
+        <h1>{title}</h1>
+        <p class="legal__updated">Last updated {updated}</p>
+      </header>
+
+      <div class="prose">
+        <slot />
+      </div>
+
+      <nav class="legal__more" aria-label="Related pages">
+        <a href={related.href}>{related.label}</a>
+        <a href="/#work">Back to {app}</a>
+      </nav>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .legal {
+    padding-block: clamp(3rem, 7vw, 5rem);
+  }
+
+  .legal__inner {
+    max-width: calc(var(--measure) + var(--gutter) * 2);
+    margin-inline: auto;
+  }
+
+  .legal__head {
+    padding-bottom: clamp(1.75rem, 4vw, 2.5rem);
+    margin-bottom: clamp(1.75rem, 4vw, 2.5rem);
+    border-bottom: 1px solid var(--ink-line);
+  }
+
+  .legal__head h1 {
+    margin-top: 0.75rem;
+    font-size: clamp(2rem, 1.5rem + 2.2vw, 3rem);
+  }
+
+  .legal__updated {
+    margin-top: 0.9rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    color: var(--ink-muted);
+  }
+
+  /* Markdown arrives through the slot, so these rules have to reach into it. */
+  .prose :global(h2) {
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+    font-size: clamp(1.15rem, 1.05rem + 0.5vw, 1.4rem);
+  }
+
+  .prose :global(h2:first-child) {
+    margin-top: 0;
+  }
+
+  .prose :global(p) {
+    color: var(--ink-muted);
+  }
+
+  .prose :global(p + p) {
+    margin-top: 1rem;
+  }
+
+  .prose :global(ul) {
+    display: grid;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding-left: 1.1rem;
+    list-style: disc;
+    color: var(--ink-muted);
+  }
+
+  .prose :global(strong) {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .prose :global(a) {
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+  }
+
+  .legal__more {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 2rem;
+    margin-top: clamp(2.5rem, 5vw, 3.5rem);
+    padding-top: clamp(1.5rem, 3vw, 2rem);
+    border-top: 1px solid var(--ink-line);
+  }
+
+  .legal__more a {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    color: var(--ink-muted);
+    text-decoration: none;
+  }
+
+  .legal__more a:hover {
+    color: var(--ink);
+    text-decoration: underline;
+    text-underline-offset: 0.3em;
+  }
+</style>

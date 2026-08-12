@@ -1,0 +1,111 @@
+---
+import { profile } from '../data/site';
+---
+
+<section class="hero" id="top">
+  <div class="shell hero__inner">
+    <div class="hero__text">
+      <p class="eyebrow">{profile.role} · {profile.focus}</p>
+
+      <h1>
+        Hi, I'm Arwin.<br />
+        <span class="hero__accent">I like to build things.</span>
+      </h1>
+
+      <p class="hero__lede">
+        I build native apps for iPhone and Apple Watch — the kind that feel quick, hold up under real
+        use, and make sense the first time you open them.
+      </p>
+
+      <div class="hero__actions">
+        <a class="btn btn--solid" href="#work">See my work</a>
+        <a class="btn btn--ghost" href="#contact">Get in touch</a>
+      </div>
+    </div>
+
+    <div class="hero__art" aria-hidden="true">
+      {/* Concentric waves rising through a circle — aizome cloth, pared back. */}
+      <svg viewBox="0 0 320 320" role="presentation">
+        <defs>
+          <clipPath id="hero-circle">
+            <circle cx="160" cy="160" r="149" />
+          </clipPath>
+        </defs>
+
+        <g clip-path="url(#hero-circle)" fill="none" stroke="currentColor" stroke-linecap="round">
+          {
+            Array.from({ length: 16 }).map((_, i) => (
+              <circle
+                cx="160"
+                cy="336"
+                r={44 + i * 21}
+                stroke-width={i % 4 === 0 ? 2.6 : 1.2}
+                opacity={i % 4 === 0 ? 0.9 : 0.45}
+              />
+            ))
+          }
+        </g>
+
+        <circle cx="160" cy="160" r="149" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.55" />
+      </svg>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-block: clamp(3.5rem, 11vw, 8rem) clamp(3rem, 8vw, 6rem);
+  }
+
+  .hero__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(2rem, 6vw, 5rem);
+  }
+
+  .hero .eyebrow {
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.5rem, 1.6rem + 4.4vw, 4.75rem);
+    letter-spacing: -0.03em;
+  }
+
+  .hero__accent {
+    color: var(--ink-muted);
+    font-style: italic;
+  }
+
+  .hero__lede {
+    max-width: 46ch;
+    margin-top: 1.75rem;
+    font-size: clamp(1.05rem, 1rem + 0.35vw, 1.25rem);
+    color: var(--ink-muted);
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2.25rem;
+  }
+
+  .hero__art {
+    color: var(--ink);
+    opacity: 0.5;
+    justify-self: center;
+    width: min(100%, 22rem);
+  }
+
+  @media (max-width: 52rem) {
+    .hero__inner {
+      grid-template-columns: 1fr;
+    }
+
+    .hero__art {
+      display: none;
+    }
+  }
+</style>

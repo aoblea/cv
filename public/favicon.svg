@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <title>Arwin Oblea</title>
+  <rect width="256" height="256" rx="56" fill="#264C73"/>
+  <g fill="none" stroke="#F4F0E6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M50 194 L128 68 L206 194" stroke-width="33"/>
+    <path d="M80 162 H176" stroke-width="27"/>
+  </g>
+</svg>

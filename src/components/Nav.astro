@@ -1,0 +1,267 @@
+---
+import { profile } from '../data/site';
+
+// Root-relative so the nav also works from the legal pages, where a bare
+// fragment would look for a section that is not on the page.
+const links = [
+  { href: '/#about', label: 'About' },
+  { href: '/#work', label: 'Work' },
+  { href: '/#contact', label: 'Contact' },
+  { href: profile.linkedin, label: 'CV', external: true },
+];
+---
+
+<header class="nav">
+  <div class="shell nav__inner">
+    <a class="nav__brand" href="/#top">
+      <span class="nav__mark" aria-hidden="true">AO</span>
+      <span class="nav__name">{profile.name}</span>
+    </a>
+
+    <nav class="nav__nav" aria-label="Primary">
+      <ul class="nav__links">
+        {
+          links.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                target={link.external ? '_blank' : undefined}
+                rel={link.external ? 'noopener' : undefined}
+              >
+                {link.label}
+                {link.external && (
+                  <svg class="nav__external" viewBox="0 0 16 16" aria-hidden="true">
+                    <path
+                      d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.6"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                )}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to dark theme">
+        <svg class="theme-toggle__sun" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.4" fill="currentColor" />
+          <g stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <path d="M12 2.4v2.4M12 19.2v2.4M2.4 12h2.4M19.2 12h2.4" />
+            <path d="M5.2 5.2l1.7 1.7M17.1 17.1l1.7 1.7M18.8 5.2l-1.7 1.7M6.9 17.1l-1.7 1.7" />
+          </g>
+        </svg>
+        <svg class="theme-toggle__moon" viewBox="0 0 24 24" aria-hidden="true">
+          <path
+            d="M20.5 14.6A8.6 8.6 0 0 1 9.4 3.5a8.6 8.6 0 1 0 11.1 11.1Z"
+            fill="currentColor"
+          />
+        </svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const root = document.documentElement;
+  const toggle = document.querySelector<HTMLButtonElement>('.theme-toggle');
+  const meta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
+  const PAPER = { light: '#F4F0E6', dark: '#264C73' } as const;
+
+  function apply(theme: 'light' | 'dark', persist: boolean) {
+    if (theme === 'dark') root.dataset.theme = 'dark';
+    else delete root.dataset.theme;
+
+    if (meta) meta.content = PAPER[theme];
+
+    toggle?.setAttribute('aria-pressed', String(theme === 'dark'));
+    toggle?.setAttribute(
+      'aria-label',
+      theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'
+    );
+
+    if (!persist) return;
+    try {
+      localStorage.setItem('theme', theme);
+    } catch {
+      /* private mode: the choice just will not persist */
+    }
+  }
+
+  // Sync the button with whatever the inline head script settled on, without
+  // writing a preference the reader never actually expressed.
+  apply(root.dataset.theme === 'dark' ? 'dark' : 'light', false);
+
+  toggle?.addEventListener('click', () => {
+    apply(root.dataset.theme === 'dark' ? 'light' : 'dark', true);
+  });
+</script>
+
+<style>
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter: saturate(1.4) blur(10px);
+    -webkit-backdrop-filter: saturate(1.4) blur(10px);
+    border-bottom: 1px solid var(--ink-line);
+  }
+
+  .nav__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 4.25rem;
+  }
+
+  .nav__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .nav__mark {
+    display: grid;
+    place-items: center;
+    width: 1.9rem;
+    height: 1.9rem;
+    border-radius: 0.55rem;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .nav__name {
+    font-size: 0.95rem;
+    letter-spacing: 0.01em;
+  }
+
+  .nav__nav {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.75rem, 2vw, 1.75rem);
+    min-width: 0;
+  }
+
+  .nav__links {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 3vw, 2.25rem);
+    margin: 0;
+    /* Safety valve for very narrow phones; it fits without scrolling from ~360px. */
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .nav__links::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav__links li {
+    flex: none;
+  }
+
+  .theme-toggle {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 1.9rem;
+    height: 1.9rem;
+    padding: 0;
+    border: 1px solid var(--ink-line);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--ink-muted);
+    cursor: pointer;
+    transition: color 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+  }
+
+  .theme-toggle:hover {
+    color: var(--ink);
+    border-color: var(--ink-faint);
+    transform: rotate(-15deg);
+  }
+
+  .theme-toggle svg {
+    width: 0.95rem;
+    height: 0.95rem;
+  }
+
+  /* Show the destination, not the current state: a moon means "go dark". */
+  .theme-toggle__sun {
+    display: none;
+  }
+
+  :root[data-theme='dark'] .theme-toggle__sun {
+    display: block;
+  }
+
+  :root[data-theme='dark'] .theme-toggle__moon {
+    display: none;
+  }
+
+  .nav__links a {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    text-decoration: none;
+    font-size: 0.875rem;
+    color: var(--ink-muted);
+    padding-block: 0.25rem;
+    transition: color 0.18s ease;
+  }
+
+  .nav__external {
+    width: 0.7em;
+    height: 0.7em;
+    color: var(--ink-faint);
+  }
+
+  .nav__links a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: var(--ink);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.22s ease;
+  }
+
+  .nav__links a:hover {
+    color: var(--ink);
+  }
+
+  .nav__links a:hover::after {
+    transform: scaleX(1);
+  }
+
+  @media (max-width: 34rem) {
+    .nav__name {
+      display: none;
+    }
+
+    /* Four links have to fit a 320px screen alongside the mark. */
+    .nav__links {
+      gap: 0.9rem;
+    }
+
+    .nav__links a {
+      font-size: 0.8rem;
+    }
+  }
+</style>
