@@ -1,5 +1,6 @@
 ---
 import { profile } from '../data/site';
+import { withBase } from '../lib/url';
 
 const year = new Date().getFullYear();
 ---
@@ -10,8 +11,8 @@ const year = new Date().getFullYear();
 
     <nav class="footer__legal" aria-label="Legal">
       <span class="footer__legal-label">Pork Sliders</span>
-      <a href="/pork-sliders/privacy">Privacy</a>
-      <a href="/pork-sliders/terms">Terms</a>
+      <a href={withBase('/pork-sliders/privacy')}>Privacy</a>
+      <a href={withBase('/pork-sliders/terms')}>Terms</a>
     </nav>
   </div>
 </footer>

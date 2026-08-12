@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import { profile } from '../data/site';
+import { withBase } from '../lib/url';
 
 interface Props {
   title?: string;
@@ -25,9 +26,9 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://example.com
     <meta name="author" content={profile.name} />
     <link rel="canonical" href={canonical} />
 
-    <link rel="icon" href="/myicon.ico" sizes="any" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" href={withBase('/myicon.ico')} sizes="any" />
+    <link rel="icon" href={withBase('/favicon.svg')} type="image/svg+xml" />
+    <link rel="apple-touch-icon" href={withBase('/apple-touch-icon.png')} />
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />

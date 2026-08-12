@@ -1,19 +1,20 @@
 ---
 import { profile } from '../data/site';
+import { withBase } from '../lib/url';
 
 // Root-relative so the nav also works from the legal pages, where a bare
 // fragment would look for a section that is not on the page.
 const links = [
-  { href: '/#about', label: 'About' },
-  { href: '/#work', label: 'Work' },
-  { href: '/#contact', label: 'Contact' },
+  { href: withBase('/#about'), label: 'About' },
+  { href: withBase('/#work'), label: 'Work' },
+  { href: withBase('/#contact'), label: 'Contact' },
   { href: profile.linkedin, label: 'CV', external: true },
 ];
 ---
 
 <header class="nav">
   <div class="shell nav__inner">
-    <a class="nav__brand" href="/#top">
+    <a class="nav__brand" href={withBase('/#top')}>
       <span class="nav__mark" aria-hidden="true">AO</span>
       <span class="nav__name">{profile.name}</span>
     </a>
