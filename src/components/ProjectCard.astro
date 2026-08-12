@@ -1,0 +1,287 @@
+---
+import { Image } from 'astro:assets';
+
+import ProjectArt from './ProjectArt.astro';
+import type { Project } from '../data/site';
+
+interface Props {
+  project: Project;
+  index: number;
+}
+
+const { project, index } = Astro.props;
+const flipped = index % 2 === 1;
+---
+
+<article class:list={['project', flipped && 'project--flipped']}>
+  <div class="project__art">
+    {
+      project.image && project.inset ? (
+        <div class="project__devices">
+          <Image
+            class="project__screen"
+            src={project.image.src}
+            alt={project.image.alt}
+            widths={[248, 372]}
+            sizes="15.5rem"
+            loading="lazy"
+          />
+          <Image
+            class="project__screen project__screen--inset"
+            src={project.inset.src}
+            alt={project.inset.alt}
+            widths={[152, 228]}
+            sizes="9.5rem"
+            loading="lazy"
+          />
+        </div>
+      ) : project.image ? (
+        <Image
+          src={project.image.src}
+          alt={project.image.alt}
+          widths={[352, 500]}
+          sizes="(max-width: 52rem) 80vw, 22rem"
+          loading="lazy"
+        />
+      ) : (
+        <ProjectArt kind={project.art} />
+      )
+    }
+  </div>
+
+  <div class="project__body">
+    <p class="project__index">{String(index + 1).padStart(2, '0')}</p>
+
+    <div class="project__title">
+      {
+        project.icon && (
+          <Image class="project__icon" src={project.icon} alt="" width={96} height={96} loading="lazy" />
+        )
+      }
+      <h3>{project.name}</h3>
+      <span class="project__status">{project.status}</span>
+    </div>
+
+    <p class="project__tagline">{project.tagline}</p>
+    <p class="project__blurb">{project.blurb}</p>
+
+    <ul class="project__highlights">
+      {
+        project.highlights.map((highlight) => (
+          <li>
+            <span class="project__tick" aria-hidden="true" />
+            {highlight}
+          </li>
+        ))
+      }
+    </ul>
+
+    <ul class="project__tags" aria-label={`Built with, ${project.name}`}>
+      {project.built.map((tag) => <li>{tag}</li>)}
+    </ul>
+
+    {
+      project.link && (
+        <a class="btn btn--ghost project__link" href={project.link.href} target="_blank" rel="noopener">
+          {project.link.label}
+        </a>
+      )
+    }
+
+    {
+      project.docs && (
+        <ul class="project__docs" aria-label={`Legal, ${project.name}`}>
+          {project.docs.map((doc) => (
+            <li>
+              <a href={doc.href}>{doc.label}</a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+</article>
+
+<style>
+  .project {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: clamp(1.75rem, 5vw, 4rem);
+    align-items: center;
+  }
+
+  .project + .project {
+    margin-top: clamp(3rem, 7vw, 5.5rem);
+    padding-top: clamp(3rem, 7vw, 5.5rem);
+    border-top: 1px solid var(--ink-line);
+  }
+
+  .project--flipped .project__art {
+    order: 2;
+  }
+
+  .project__art {
+    display: grid;
+    place-items: center;
+    padding: clamp(1.25rem, 3vw, 2.25rem);
+    background: var(--plate);
+    border: 1px solid var(--plate-line);
+    border-radius: 1.25rem;
+    color: var(--plate-ink);
+    overflow: hidden;
+  }
+
+  .project__art :global(img) {
+    width: 100%;
+    max-width: 22rem;
+  }
+
+  /* Two devices, the smaller one tucked in front of the taller one. */
+  .project__devices {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .project__art :global(.project__screen) {
+    display: block;
+    width: auto;
+    height: clamp(15rem, 32vw, 23rem);
+    max-width: none;
+    border-radius: 1.35rem;
+    box-shadow: 0 1.25rem 2.5rem -1rem color-mix(in srgb, var(--plate-ink) 45%, transparent);
+  }
+
+  .project__art :global(.project__screen--inset) {
+    height: clamp(6.5rem, 14vw, 10rem);
+    margin-inline-start: -2.25rem;
+    margin-bottom: 1.75rem;
+    border-radius: 1rem;
+  }
+
+  .project__index {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    color: var(--ink-muted);
+    margin-bottom: 0.85rem;
+  }
+
+  .project__title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .project__title h3 {
+    font-size: clamp(1.6rem, 1.3rem + 1.2vw, 2.25rem);
+  }
+
+  .project__title :global(.project__icon) {
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 0.7rem;
+    border: 1px solid var(--ink-line);
+  }
+
+  .project__status {
+    padding: 0.2rem 0.65rem;
+    border: 1px solid var(--ink-faint);
+    border-radius: 999px;
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  .project__tagline {
+    margin-top: 0.6rem;
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--ink-muted);
+  }
+
+  .project__blurb {
+    margin-top: 1.1rem;
+    max-width: 52ch;
+    color: var(--ink-muted);
+  }
+
+  .project__highlights {
+    display: grid;
+    gap: 0.6rem;
+    margin-top: 1.5rem;
+  }
+
+  .project__highlights li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.7rem;
+    align-items: baseline;
+    font-size: 0.95rem;
+  }
+
+  .project__tick {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    border: 1.5px solid var(--ink);
+    transform: translateY(-0.05rem);
+  }
+
+  .project__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.75rem;
+  }
+
+  .project__tags li {
+    padding: 0.3rem 0.7rem;
+    border-radius: 0.45rem;
+    background: var(--ink-wash);
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.03em;
+    color: var(--ink-muted);
+  }
+
+  .project__link {
+    margin-top: 1.75rem;
+  }
+
+  .project__docs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 1.25rem;
+    margin-top: 1.5rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    color: var(--ink-muted);
+  }
+
+  .project__docs a {
+    text-decoration: none;
+  }
+
+  .project__docs a:hover {
+    color: var(--ink);
+    text-decoration: underline;
+    text-underline-offset: 0.3em;
+  }
+
+  @media (max-width: 52rem) {
+    .project,
+    .project--flipped {
+      grid-template-columns: 1fr;
+    }
+
+    .project--flipped .project__art {
+      order: 0;
+    }
+  }
+</style>

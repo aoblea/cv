@@ -1,0 +1,140 @@
+---
+import { Image } from 'astro:assets';
+
+import { earlierProjects } from '../data/site';
+---
+
+<section class="section" id="earlier">
+  <div class="shell">
+    <div class="section-head">
+      <p class="eyebrow">03 — Earlier</p>
+      <h2>Where I started</h2>
+      <span class="rule"></span>
+    </div>
+
+    <p class="earlier__intro">
+      The apps I built while learning iOS. They are older and simpler than what I write now, but the
+      code is still up if you want to see how I got here.
+    </p>
+
+    <ul class="earlier__grid">
+      {
+        earlierProjects.map((project) => (
+          <li class="card">
+            <div class="card__shot">
+              <Image
+                src={project.image}
+                alt={`${project.name} screenshot`}
+                width={560}
+                height={560}
+                widths={[280, 560]}
+                sizes="18rem"
+                loading="lazy"
+              />
+            </div>
+            <div class="card__body">
+              <h3>{project.name}</h3>
+              <p>{project.blurb}</p>
+              <a class="card__link" href={project.repo} target="_blank" rel="noopener">
+                View code
+                <svg viewBox="0 0 16 16" aria-hidden="true">
+                  <path
+                    d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </a>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .earlier__intro {
+    max-width: var(--measure);
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+    color: var(--ink-muted);
+  }
+
+  .earlier__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+    gap: 1.5rem;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--ink-line);
+    border-radius: 1rem;
+    overflow: hidden;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-3px);
+    border-color: var(--ink-faint);
+  }
+
+  .card__shot {
+    display: grid;
+    place-items: center;
+    padding: 1.5rem 1.5rem 0;
+    background: var(--plate);
+    border-bottom: 1px solid var(--plate-line);
+  }
+
+  .card__shot :global(img) {
+    width: 100%;
+    max-width: 11rem;
+  }
+
+  .card__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    padding: 1.4rem;
+    flex: 1;
+  }
+
+  .card__body h3 {
+    font-size: 1.2rem;
+  }
+
+  .card__body p {
+    font-size: 0.9rem;
+    color: var(--ink-muted);
+    flex: 1;
+  }
+
+  .card__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    align-self: flex-start;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-bottom: 1px solid var(--ink-faint);
+    padding-bottom: 0.15rem;
+    transition: border-color 0.18s ease;
+  }
+
+  .card__link:hover {
+    border-color: var(--ink);
+  }
+
+  .card__link svg {
+    width: 0.85em;
+    height: 0.85em;
+  }
+</style>

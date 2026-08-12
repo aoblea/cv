@@ -1,0 +1,113 @@
+---
+interface Props {
+  kind: 'hatawset' | 'porkslider';
+}
+
+const { kind } = Astro.props;
+
+// A made-up but plausible progression, drawn rather than screenshotted.
+const bars = [26, 34, 30, 46, 52, 44, 63, 71, 68, 86];
+const ring = { r: 26, circumference: 2 * Math.PI * 26 };
+---
+
+{
+  kind === 'hatawset' && (
+    <svg class="art" viewBox="0 0 400 300" role="img" aria-label="Abstract chart of training progress">
+      <g stroke="currentColor" stroke-width="1" opacity="0.18">
+        {[0, 1, 2, 3].map((i) => (
+          <line x1="40" y1={70 + i * 44} x2="270" y2={70 + i * 44} />
+        ))}
+      </g>
+
+      {bars.map((value, i) => (
+        <rect
+          x={44 + i * 23}
+          y={202 - value * 1.5}
+          width="13"
+          height={value * 1.5}
+          rx="3"
+          fill="currentColor"
+          opacity={0.28 + i * 0.055}
+        />
+      ))}
+
+      <polyline
+        points={bars.map((value, i) => `${50.5 + i * 23},${196 - value * 1.5}`).join(' ')}
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        opacity="0.85"
+      />
+
+      {bars.map((value, i) => (
+        <circle cx={50.5 + i * 23} cy={196 - value * 1.5} r="2.75" fill="currentColor" />
+      ))}
+
+      <g transform="translate(322 96)">
+        <circle r={ring.r} fill="none" stroke="currentColor" stroke-width="7" opacity="0.2" />
+        <circle
+          r={ring.r}
+          fill="none"
+          stroke="currentColor"
+          stroke-width="7"
+          stroke-linecap="round"
+          stroke-dasharray={`${ring.circumference * 0.72} ${ring.circumference}`}
+          transform="rotate(-90)"
+        />
+      </g>
+
+      <g transform="translate(296 152)" opacity="0.55">
+        {[0, 1, 2].map((i) => (
+          <g transform={`translate(0 ${i * 26})`}>
+            <rect width="52" height="9" rx="4.5" fill="currentColor" />
+            <rect x="60" width="20" height="9" rx="4.5" fill="currentColor" opacity="0.5" />
+          </g>
+        ))}
+      </g>
+
+      <line x1="40" y1="232" x2="360" y2="232" stroke="currentColor" stroke-width="1.5" opacity="0.35" />
+    </svg>
+  )
+}
+
+{
+  kind === 'porkslider' && (
+    <svg class="art" viewBox="0 0 400 300" role="img" aria-label="Abstract falling bricks">
+      {[
+        { x: 52, y: 62, w: 96 },
+        { x: 214, y: 62, w: 132 },
+        { x: 52, y: 122, w: 62 },
+        { x: 168, y: 122, w: 178 },
+        { x: 92, y: 182, w: 150 },
+        { x: 286, y: 182, w: 60 },
+      ].map((brick, i) => (
+        <rect
+          x={brick.x}
+          y={brick.y}
+          width={brick.w}
+          height="14"
+          rx="7"
+          fill="currentColor"
+          opacity={0.25 + (i % 3) * 0.2}
+        />
+      ))}
+      <g transform="translate(200 250)">
+        <circle r="21" fill="currentColor" opacity="0.9" />
+        <circle cx="-7" cy="-4" r="2.6" fill="var(--plate)" />
+        <circle cx="7" cy="-4" r="2.6" fill="var(--plate)" />
+        <ellipse cy="6" rx="8" ry="6" fill="var(--plate)" opacity="0.85" />
+      </g>
+      <line x1="40" y1="278" x2="360" y2="278" stroke="currentColor" stroke-width="1.5" opacity="0.35" />
+    </svg>
+  )
+}
+
+<style>
+  .art {
+    width: 100%;
+    height: auto;
+    color: inherit;
+  }
+</style>
