@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 
 import ProjectArt from './ProjectArt.astro';
 import type { Project } from '../data/site';
+import { withBase } from '../lib/url';
 
 interface Props {
   project: Project;
@@ -93,7 +94,7 @@ const flipped = index % 2 === 1;
         <ul class="project__docs" aria-label={`Legal, ${project.name}`}>
           {project.docs.map((doc) => (
             <li>
-              <a href={doc.href}>{doc.label}</a>
+              <a href={withBase(doc.href)}>{doc.label}</a>
             </li>
           ))}
         </ul>

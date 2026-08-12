@@ -2,6 +2,7 @@
 import Footer from '../components/Footer.astro';
 import Nav from '../components/Nav.astro';
 import BaseLayout from './BaseLayout.astro';
+import { withBase } from '../lib/url';
 
 interface Props {
   frontmatter: {
@@ -33,8 +34,8 @@ const { title, app, updated, description, related } = Astro.props.frontmatter;
       </div>
 
       <nav class="legal__more" aria-label="Related pages">
-        <a href={related.href}>{related.label}</a>
-        <a href="/#work">Back to {app}</a>
+        <a href={withBase(related.href)}>{related.label}</a>
+        <a href={withBase('/#work')}>Back to {app}</a>
       </nav>
     </div>
   </main>
